@@ -51,3 +51,5 @@ ggplot(death_data, aes(x = "", y = Count, fill = Death)) +
 https://www.r-bloggers.com/2021/07/countif-function-in-r/
 
 https://r-graph-gallery.com/piechart-ggplot2.html
+
+https://randomwordgenerator.com/color.php
