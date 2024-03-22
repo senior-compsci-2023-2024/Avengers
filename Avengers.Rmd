@@ -1,0 +1,53 @@
+---
+title: "Avengers"
+author: "Hongsheng Liu"
+date: "2024-03-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+setwd("C:/Users/kevin/Desktop/School stuff/EDIE/Week 26/Avengers")
+dat <- read_csv("C:/Users/kevin/Desktop/School stuff/EDIE/Week 26/Avengers/avengers.csv")
+deathRate <- select(dat, Death1, Return1, Death2)
+```
+
+```{r}
+oneDeath <- sum(dat$ Death1 == "YES")
+noDeath <- sum(dat$ Death1 == "NO")
+totalMem <- nrow(deathRate)
+oneDeath_percent <- round((oneDeath / totalMem) * 100)
+noDeath_percent <- round((noDeath / totalMem) * 100)
+```
+
+
+```{r}
+death_data <- data.frame(Death = c("YES", "NO"),
+                         Count = c(oneDeath, noDeath),
+                         Percent = c(oneDeath_percent, noDeath_percent))
+my_colors <- c("#E63946", "#457B9D")
+ggplot(death_data, aes(x = "", y = Count, fill = Death)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y", start = 0) +
+  geom_text(aes(label = paste0(Death, ": ", Count, " (", Percent, "%)")),
+            position = position_stack(vjust = 0.5), 
+            size = 4, color = "white") +
+  labs(title = "First Death Rate Among Avengers", fill = "Death") +
+  scale_fill_manual(values = my_colors) +
+  theme_minimal() +
+  theme(legend.position = "right", plot.title = element_text(size = 18, face = "bold"),
+        legend.title = element_text(size = 14),legend.text = element_text(size = 12))
+```
+
+
+## References
+
+https://www.r-bloggers.com/2021/07/countif-function-in-r/
+
+https://r-graph-gallery.com/piechart-ggplot2.html
